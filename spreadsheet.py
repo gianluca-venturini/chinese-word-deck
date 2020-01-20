@@ -11,9 +11,8 @@ class NoValuesFoundException(Exception):
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
 
-# The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1VIEpS1J5ZXsVC_YSBIp9UZ6vr37hgtZLcSQqBERP_YY'
-SAMPLE_RANGE_NAME = 'Form Responses 1!B2:D'  # Chinese (pinyin), English, Chinese (character)
+SPREADSHEET_ID = os.environ['SPREADSHEET_ID']
+RANGE_NAME = 'Form Responses 1!B2:D'  # Chinese (pinyin), English, Chinese (character)
 
 def retrieve_words():
     """Shows basic usage of the Sheets API.
@@ -42,8 +41,8 @@ def retrieve_words():
 
     # Call the Sheets API
     sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=SAMPLE_RANGE_NAME).execute()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                                range=RANGE_NAME).execute()
     values = result.get('values', [])
 
     if not values:

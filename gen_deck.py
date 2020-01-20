@@ -24,10 +24,12 @@ my_deck = genanki.Deck(
     'Chinese::Word of the day')
 
 words = retrieve_words()
+audio_filenames = []
 for word in words:
     print('Generating card for {}, {}, {}...'.format(word[1], word[0], word[2]))
     audio_filename = '{}.mp3'.format(word[2])
     gen_media_file(word[2], audio_filename)
+    audio_filenames.append('audio/' + audio_filename)
     my_note = genanki.Note(
         model=my_model,
         fields=[
@@ -37,4 +39,6 @@ for word in words:
         ])
     my_deck.add_note(my_note)
 
-genanki.Package(my_deck).write_to_file('output.apkg')
+my_package = genanki.Package(my_deck)
+my_package.media_files = audio_filenames
+my_package.write_to_file('output.apkg')
